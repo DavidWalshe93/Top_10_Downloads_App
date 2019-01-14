@@ -14,6 +14,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import javax.security.auth.login.LoginException;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
@@ -39,13 +41,15 @@ public class MainActivity extends AppCompatActivity {
             if (rssFeed == null) {
                 Log.e(TAG, "doInBackground: Error downloaded");
             }
-            return "rssFeed";
+            return rssFeed;
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.d(TAG, "onPostExecute: parameter is " + s);
+            //Log.d(TAG, "onPostExecute: parameter is " + s);
+            ParseApplications parseApplications = new ParseApplications();
+            parseApplications.parse(s);
         }
 
         private String downloadXML(String urlPath) {
@@ -69,10 +73,16 @@ public class MainActivity extends AppCompatActivity {
                         xmlResult.append(String.copyValueOf(inputBuffer, 0, charRead));     // Convert the chars into a string to append to the string builder.
                     }
                 }
+                reader.close();
+
+                return xmlResult.toString();
             } catch (MalformedURLException e) {
                 Log.e(TAG, "downloadXML: Invalid URL " + e.getMessage());
             } catch (IOException e) {
                 Log.e(TAG, "downloadXML: IO Exception reading data: " + e.getMessage());
+            } catch (SecurityException e) {
+                Log.e(TAG, "downloadXML: Security Exception. Needs permission? " + e.getMessage());
+                e.printStackTrace();
             }
             return null;
         }
