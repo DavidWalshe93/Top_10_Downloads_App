@@ -16,7 +16,7 @@ public class ParseApplications {
     private static final String TAG = "ParseApplications";
     private ArrayList<FeedEntry> applications;
 
-    public ParseApplications() {
+    ParseApplications() {
         this.applications = new ArrayList<>();
     }
 
@@ -24,7 +24,7 @@ public class ParseApplications {
         return applications;
     }
 
-    public boolean parse(String xmlData) {
+    boolean parse(String xmlData) {
         boolean status = true;
         FeedEntry currentRecord = null;
         boolean inEntry = false;
