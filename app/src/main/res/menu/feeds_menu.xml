@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menuFree"
+        android:title="Free Apps" />
+    <item
+        android:id="@+id/menuPaid"
+        android:title="Paid Apps" />
+    <item
+        android:id="@+id/menuSongs"
+        android:title="Songs" />
+    <group
+        android:id="@+id/menuGroupLimit"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/menuTop10"
+            android:checked="true"
+            android:title="Top 10" />
+        <item
+            android:id="@+id/menuTop25"
+            android:title="Top 25" />
+    </group>
+    <item
+        android:id="@+id/menuRefresh"
+        android:icon="@android:drawable/ic_menu_rotate"
+        android:title="Refresh"
+        app:showAsAction="always" />
+</menu>

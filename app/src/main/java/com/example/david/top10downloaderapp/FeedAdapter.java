@@ -2,6 +2,7 @@ package com.example.david.top10downloaderapp;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +17,13 @@ import java.util.List;
 // David Walshe
 // 15/01/2019
 
-public class FeedAdapter extends ArrayAdapter {
+public class FeedAdapter<T extends FeedEntry> extends ArrayAdapter {
     private static final String TAG = "FeedAdapter";
     private final int layoutResource;
     private final LayoutInflater layoutInflater;
-    private List<FeedEntry> applications;
+    private List<T> applications;
 
-    public FeedAdapter(Context context, int resource, List<FeedEntry> applications) {
+    public FeedAdapter(Context context, int resource, List<T> applications) {
         super(context, resource);
         this.layoutResource = resource;
         this.layoutInflater = LayoutInflater.from(context);
@@ -41,18 +42,20 @@ public class FeedAdapter extends ArrayAdapter {
         ViewHolder viewHolder;
 
         if (convertView == null) {
+            Log.d(TAG, "getView: called with null convertView");
             convertView = layoutInflater.inflate(layoutResource, parent, false);      // Create view by inflating the view from the inflater from the context
 
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {
+            Log.d(TAG, "getView: provided a convertView");
             viewHolder = (ViewHolder) convertView.getTag();
         }
 //        TextView nameTextView = (TextView) convertView.findViewById(R.id.nameTextView);            // Get the IDs of the text views in the view generated above
 //        TextView artistTextView = (TextView) convertView.findViewById(R.id.artistTextView);
 //        TextView summaryTextView = (TextView) convertView.findViewById(R.id.summaryTextView);
 
-        FeedEntry currentApp = applications.get(position);      // Get the data for the views
+        T currentApp = applications.get(position);      // Get the data for the views
 
         viewHolder.nameTextView.setText(currentApp.getName());             // Set the data in the view
         viewHolder.artistTextView.setText(currentApp.getArtist());
